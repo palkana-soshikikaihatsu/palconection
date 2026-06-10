@@ -2,8 +2,9 @@ import { NavLink } from 'react-router-dom'
 
 const navItems = [
   { path: '/', label: 'ホーム', icon: '🏠' },
-  { path: '/communities', label: 'コミュニティ', icon: '👥' },
-  { path: '/profile', label: 'プロフィール', icon: '👤' },
+  { path: '/members', label: 'メンバー', icon: '👥' },
+  { path: '/communities', label: 'コミュニティ', icon: '💬' },
+  { path: '/profile', label: 'マイページ', icon: '👤' },
 ]
 
 export function Navigation() {

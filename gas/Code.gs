@@ -90,6 +90,9 @@ function handleRequest(e, method) {
       case 'updateProfile':
         result = handleUpdateProfile(e, token);
         break;
+      case 'getMembers':
+        result = handleGetMembers(e, token);
+        break;
       
       // 管理者
       case 'registerUser':

@@ -129,6 +129,10 @@ class ApiService {
   async updateProfile(data: Partial<User>): Promise<ApiResponse<User>> {
     return this.request<User>('updateProfile', 'POST', data)
   }
+
+  async getMembers(page: number = 1, search?: string): Promise<ApiResponse<PaginatedResponse<User> & { total: number }>> {
+    return this.request<PaginatedResponse<User> & { total: number }>('getMembers', 'GET', { page, search })
+  }
 }
 
 export const api = new ApiService()

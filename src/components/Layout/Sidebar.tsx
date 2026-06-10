@@ -2,7 +2,8 @@ import { NavLink } from 'react-router-dom'
 
 const navItems = [
   { path: '/', label: 'タイムライン', icon: '📰' },
-  { path: '/communities', label: 'コミュニティ', icon: '👥' },
+  { path: '/members', label: 'メンバー', icon: '👥' },
+  { path: '/communities', label: 'コミュニティ', icon: '💬' },
   { path: '/profile', label: 'プロフィール', icon: '👤' },
 ]
 

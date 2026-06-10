@@ -3,6 +3,65 @@
  */
 
 /**
+ * メンバー一覧取得（全ユーザー向け）
+ */
+function handleGetMembers(e, token) {
+  const userId = validateSession(token);
+  if (!userId) {
+    return { success: false, error: 'Not authenticated' };
+  }
+  
+  const page = parseInt(e.parameter.page) || 1;
+  const search = (e.parameter.search || '').toLowerCase();
+  const pageSize = 20;
+  const offset = (page - 1) * pageSize;
+  
+  const sheet = getSheet('Users');
+  const data = sheet.getDataRange().getValues();
+  
+  let members = [];
+  for (let i = 1; i < data.length; i++) {
+    // アクティブなユーザーのみ
+    if (data[i][8] !== true && data[i][8] !== 'TRUE') continue;
+    
+    const member = {
+      userId: data[i][0],
+      displayName: data[i][3],
+      profileImage: data[i][4],
+      bio: data[i][5],
+      department: data[i][6]
+    };
+    
+    // 検索フィルター
+    if (search) {
+      const matchName = (member.displayName || '').toLowerCase().includes(search);
+      const matchDept = (member.department || '').toLowerCase().includes(search);
+      if (!matchName && !matchDept) continue;
+    }
+    
+    members.push(member);
+  }
+  
+  // 名前でソート
+  members.sort((a, b) => (a.displayName || '').localeCompare(b.displayName || '', 'ja'));
+  
+  // ページング
+  const total = members.length;
+  const pageMembers = members.slice(offset, offset + pageSize);
+  const hasMore = total > offset + pageSize;
+  
+  return {
+    success: true,
+    data: {
+      items: pageMembers,
+      total: total,
+      hasMore: hasMore,
+      nextPage: page + 1
+    }
+  };
+}
+
+/**
  * プロフィール取得
  */
 function handleGetProfile(e, token) {

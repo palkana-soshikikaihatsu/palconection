@@ -7,6 +7,7 @@ import { CommunityList } from './components/Community/CommunityList'
 import { CommunityBoard } from './components/Community/CommunityBoard'
 import { ProfileView } from './components/Profile/ProfileView'
 import { ProfileEdit } from './components/Profile/ProfileEdit'
+import { MemberGrid } from './components/Members/MemberGrid'
 import { ReactNode } from 'react'
 
 function ProtectedRoute({ children }: { children: ReactNode }) {
@@ -65,6 +66,16 @@ function AppRoutes() {
           <ProtectedRoute>
             <MainLayout>
               <Timeline />
+            </MainLayout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/members"
+        element={
+          <ProtectedRoute>
+            <MainLayout>
+              <MemberGrid />
             </MainLayout>
           </ProtectedRoute>
         }
