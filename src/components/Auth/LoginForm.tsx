@@ -1,8 +1,10 @@
 import { useState, FormEvent } from 'react'
 import { useAuth } from '../../hooks/useAuth'
+import api from '../../services/api'
 
 export function LoginForm() {
   const { login, isLoading } = useAuth()
+  const isDemoMode = api.isDemoMode()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
@@ -34,6 +36,14 @@ export function LoginForm() {
         </div>
 
         <div className="card">
+          {isDemoMode && (
+            <div className="bg-yellow-50 text-yellow-700 px-4 py-3 rounded-lg text-sm mb-4">
+              <p className="font-medium">デモモード</p>
+              <p className="mt-1">バックエンド（GAS）が設定されていません。</p>
+              <p className="mt-1 text-xs">管理者がGASをセットアップし、VITE_GAS_URLを設定してください。</p>
+            </div>
+          )}
+
           <form onSubmit={handleSubmit} className="space-y-4">
             {error && (
               <div className="bg-red-50 text-red-600 px-4 py-3 rounded-lg text-sm">

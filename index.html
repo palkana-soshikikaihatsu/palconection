@@ -2,9 +2,41 @@
 <html lang="ja">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="/palconection/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>パルコネ - 社内SNS</title>
+    <script>
+      // GitHub Pages SPA redirect handler
+      (function() {
+        const redirect = new URLSearchParams(window.location.search).get('redirect');
+        if (redirect) {
+          window.history.replaceState(null, '', 
+            window.location.pathname.replace(/\/$/, '') + decodeURIComponent(redirect)
+          );
+        }
+      })();
+    </script>
+    <style>
+      #root:empty {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        background: #f8fafc;
+      }
+      #root:empty::after {
+        content: '';
+        width: 40px;
+        height: 40px;
+        border: 4px solid #dbeafe;
+        border-top-color: #2563eb;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>

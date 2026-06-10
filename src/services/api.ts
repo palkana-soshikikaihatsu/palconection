@@ -2,11 +2,17 @@ import type { ApiResponse, User, Post, Community, CommunityPost, PaginatedRespon
 
 const GAS_URL = import.meta.env.VITE_GAS_URL || ''
 
+const isDemoMode = !GAS_URL
+
 class ApiService {
   private token: string | null = null
 
   constructor() {
     this.token = localStorage.getItem('session_token')
+  }
+
+  isDemoMode(): boolean {
+    return isDemoMode
   }
 
   setToken(token: string | null) {
@@ -74,7 +80,7 @@ class ApiService {
   }
 
   async checkSession(): Promise<ApiResponse<Session>> {
-    if (!this.token) {
+    if (!this.token || isDemoMode) {
       return { success: false, error: 'No session' }
     }
     return this.request<Session>('checkSession', 'GET')
