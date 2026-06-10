@@ -15,9 +15,16 @@ const AuthContext = createContext<AuthContextType | null>(null)
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
+  const [initialized, setInitialized] = useState(false)
 
   const refreshSession = useCallback(async () => {
+    if (api.isDemoMode()) {
+      setUser(null)
+      setIsLoading(false)
+      return
+    }
+    
     setIsLoading(true)
     try {
       const result = await api.checkSession()
@@ -36,8 +43,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [])
 
   useEffect(() => {
-    refreshSession()
-  }, [refreshSession])
+    if (!initialized) {
+      setInitialized(true)
+      refreshSession()
+    }
+  }, [initialized, refreshSession])
 
   const login = useCallback(async (email: string, password: string) => {
     setIsLoading(true)
