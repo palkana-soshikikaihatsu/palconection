@@ -133,6 +133,18 @@ class ApiService {
   async getMembers(page: number = 1, search?: string): Promise<ApiResponse<PaginatedResponse<User> & { total: number }>> {
     return this.request<PaginatedResponse<User> & { total: number }>('getMembers', 'GET', { page, search })
   }
+
+  async uploadImage(
+    base64: string,
+    mimeType: string,
+    fileName: string
+  ): Promise<ApiResponse<{ url: string; fileId: string }>> {
+    return this.request<{ url: string; fileId: string }>('uploadImage', 'POST', {
+      base64,
+      mimeType,
+      fileName,
+    })
+  }
 }
 
 export const api = new ApiService()

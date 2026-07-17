@@ -94,6 +94,11 @@ function handleRequest(e, method) {
         result = handleGetMembers(e, token);
         break;
       
+      // 画像アップロード
+      case 'uploadImage':
+        result = handleUploadImage(e, token);
+        break;
+      
       // 管理者
       case 'registerUser':
         result = handleRegisterUser(e, token);

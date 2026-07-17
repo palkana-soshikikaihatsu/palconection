@@ -2,6 +2,7 @@ import { useState, FormEvent, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth'
 import api from '../../services/api'
+import { ImagePicker } from '../common/ImagePicker'
 
 export function ProfileEdit() {
   const { user, refreshSession } = useAuth()
@@ -69,35 +70,17 @@ export function ProfileEdit() {
             </div>
           )}
 
-          <div className="flex justify-center mb-4">
-            <div className="relative">
-              <img
-                src={profileImage || '/default-avatar.png'}
-                alt="プロフィール画像"
-                className="w-24 h-24 rounded-full object-cover bg-gray-200"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="35" r="25" fill="%23ccc"/><ellipse cx="50" cy="85" rx="35" ry="25" fill="%23ccc"/></svg>'
-                }}
-              />
-            </div>
-          </div>
-
           <div>
-            <label htmlFor="profileImage" className="block text-sm font-medium text-gray-700 mb-1">
-              プロフィール画像URL
+            <label className="block text-sm font-medium text-gray-700 mb-2 text-center">
+              プロフィール画像
             </label>
-            <input
-              type="url"
-              id="profileImage"
+            <ImagePicker
               value={profileImage}
-              onChange={(e) => setProfileImage(e.target.value)}
-              className="input-field"
-              placeholder="https://example.com/image.jpg"
+              onChange={setProfileImage}
               disabled={isSubmitting}
+              label="ファイルを選択"
+              round
             />
-            <p className="text-xs text-gray-400 mt-1">
-              Imgur等の画像URLを入力してください
-            </p>
           </div>
 
           <div>

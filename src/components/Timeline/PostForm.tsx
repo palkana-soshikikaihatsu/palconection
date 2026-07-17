@@ -1,5 +1,6 @@
 import { useState, FormEvent } from 'react'
 import { useAuth } from '../../hooks/useAuth'
+import { ImagePicker } from '../common/ImagePicker'
 
 interface PostFormProps {
   onSubmit: (content: string, imageUrl?: string) => Promise<{ success: boolean; error?: string }>
@@ -10,7 +11,7 @@ export function PostForm({ onSubmit, placeholder = '今何してる？' }: PostF
   const { user } = useAuth()
   const [content, setContent] = useState('')
   const [imageUrl, setImageUrl] = useState('')
-  const [showImageInput, setShowImageInput] = useState(false)
+  const [showImagePicker, setShowImagePicker] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState('')
 
@@ -26,7 +27,7 @@ export function PostForm({ onSubmit, placeholder = '今何してる？' }: PostF
     if (result.success) {
       setContent('')
       setImageUrl('')
-      setShowImageInput(false)
+      setShowImagePicker(false)
     } else {
       setError(result.error || '投稿に失敗しました')
     }
@@ -58,15 +59,15 @@ export function PostForm({ onSubmit, placeholder = '今何してる？' }: PostF
               maxLength={500}
             />
 
-            {showImageInput && (
-              <input
-                type="url"
-                value={imageUrl}
-                onChange={(e) => setImageUrl(e.target.value)}
-                placeholder="画像URL（Imgur等）"
-                className="input-field mt-2 text-sm"
-                disabled={isSubmitting}
-              />
+            {showImagePicker && (
+              <div className="mt-2 p-3 bg-gray-50 rounded-lg">
+                <ImagePicker
+                  value={imageUrl}
+                  onChange={setImageUrl}
+                  disabled={isSubmitting}
+                  label="画像ファイルを選択"
+                />
+              </div>
             )}
 
             {error && (
@@ -76,7 +77,7 @@ export function PostForm({ onSubmit, placeholder = '今何してる？' }: PostF
             <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-100">
               <button
                 type="button"
-                onClick={() => setShowImageInput(!showImageInput)}
+                onClick={() => setShowImagePicker(!showImagePicker)}
                 className="text-gray-500 hover:text-primary-600 text-sm"
               >
                 🖼️ 画像を追加

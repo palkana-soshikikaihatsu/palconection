@@ -44,6 +44,13 @@ https://docs.google.com/spreadsheets/d/【このIDをコピー】/edit
 |-----------|-----|
 | SPREADSHEET_ID | 手順1でコピーしたID |
 | ALLOWED_ORIGIN | `https://palkana-soshikikaihatsu.github.io` |
+| DRIVE_FOLDER_ID | （任意）画像保存用DriveフォルダID。未設定なら自動で「パルコネ画像」フォルダを作成 |
+
+### 画像アップロードについて
+
+プロフィール画像・投稿画像は、ファイル選択後にGoogle Driveへ保存されます。
+
+GASに `Upload.gs` を追加し、再デプロイしてください。初回アップロード時にDriveへ「パルコネ画像」フォルダが作成されます。
 
 ## 5. 初期管理者の作成
 
