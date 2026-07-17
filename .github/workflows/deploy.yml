@@ -30,9 +30,8 @@ jobs:
         run: npm install
 
       - name: Build
+        # VITE_GAS_URL は .env.production から読み込み
         run: npm run build
-        env:
-          VITE_GAS_URL: ${{ secrets.VITE_GAS_URL }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
